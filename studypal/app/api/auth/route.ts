@@ -4,6 +4,7 @@ import { supabase } from "@/app/lib/supabase";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
+import type { Session } from "@/app/lib/types/authTypes";
 
 // Funcion para el login a la aplicacion.
 export async function login(user: string, password: string){
@@ -16,6 +17,15 @@ export async function login(user: string, password: string){
         .eq("username", user);
     
     if (data != null){
+
+        if (data.length === 0){
+            return {
+                status: "Failed",
+                reason: "Invalid username or password"
+            }
+        }
+
+        console.log(data);
 
         const loginSuccess = await bcrypt.compare(password, data[0].pwd_hash ? data[0].pwd_hash : "");
 
@@ -46,14 +56,14 @@ export async function login(user: string, password: string){
 
         return {
             status: "Failed",
-            reason: "Incorrect password"
+            reason: "Invalid username or password"
         }
 
     }
 
     return {
         status: "Failed",
-        reason: "User not found"
+        reason: "Error while trying to login, try again later"
     }
 
 }
@@ -97,7 +107,8 @@ export async function register(user: string, password: string){
     }
 
     return {
-        status: "Failed"
+        status: "Failed",
+        reason: "Failed to register user, try again later"
     }
 
 }
@@ -109,11 +120,7 @@ export async function logOut(){
 
     cookieStore.delete("token");
 
-    if (cookieStore.get("token")){
-        return true;
-    }
-
-    return false;
+    return true;
 
 }
 
@@ -125,7 +132,15 @@ export async function verifySession(){
     const token = cookieStore.get("token")?.value;
 
     if (token){
-        return true;
+
+        const payload = jwt.verify(token, process.env.JWT_SECRET!);
+
+        const session = payload as Session;
+
+        return {
+            id: session.id,
+            username: session.username
+        };
     }
 
     return false

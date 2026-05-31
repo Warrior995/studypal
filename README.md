@@ -1,2 +1,2 @@
 # studypal
-Proyecto personal de tarjetas para estudio
+Personal project for online studying flashcards

@@ -24,6 +24,7 @@ export default function TaskBar(){
 
         if (logOutAttempt){
             router.push("/");
+            setIsLoggedIn(false);
         }
         else{
             alert("Error al cerrar sesion");
@@ -37,7 +38,13 @@ export default function TaskBar(){
             <h1 className="text-[2rem]">StudyPal</h1>
             <div className="flex-1"/>
             {
-                isLoggedIn ? ( <h1 className="pr-4 font-bold underline cursor-pointer" onClick={handleLogOut}>Logout</h1>) : null
+                isLoggedIn ? ( <h1 className="pr-4 font-bold underline cursor-pointer" onClick={handleLogOut}>Logout</h1>) : 
+                (
+                    <div className="flex gap-5">
+                        <h1 className="pr-4 font-bold underline cursor-pointer" onClick={() => router.push("/login")}>Login</h1>
+                        <h1 className="pr-4 font-bold underline cursor-pointer" onClick={() => router.push("/register")}>Register</h1>
+                    </div>
+                )
             }
         </div>
     )
