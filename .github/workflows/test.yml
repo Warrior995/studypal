@@ -24,11 +24,10 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Open folder
-        run: cd studypal
-
       - name: Install dependencies
+        working directory: studypal
         run: npm i
 
       - name: Run tests
+        working directory: studypal
         run: npm test
