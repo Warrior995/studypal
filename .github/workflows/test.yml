@@ -25,9 +25,9 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        working directory: studypal
+        working-directory: studypal
         run: npm i
 
       - name: Run tests
-        working directory: studypal
+        working-directory: studypal
         run: npm test
