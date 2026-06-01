@@ -24,6 +24,9 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Open folder
+        run: cd studypal
+
       - name: Install dependencies
         run: npm install
 
