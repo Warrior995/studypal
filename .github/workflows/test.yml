@@ -28,7 +28,7 @@ jobs:
         run: cd studypal
 
       - name: Install dependencies
-        run: npm install
+        run: npm i
 
       - name: Run tests
         run: npm test
