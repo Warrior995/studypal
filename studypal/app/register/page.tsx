@@ -1,6 +1,6 @@
 "use client";
 
-import { register, verifySession } from "@/app/api/auth/route";
+import { register, verifySession } from "@/app/api/auth/authFunctions";
 import { Eye, EyeOff } from "lucide-react"
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"
