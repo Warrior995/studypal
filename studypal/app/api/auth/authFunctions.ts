@@ -138,7 +138,7 @@ export async function verifySession(){
         const session = payload as Session;
 
         return {
-            id: session.id,
+            id: session.userid,
             username: session.username
         };
     }

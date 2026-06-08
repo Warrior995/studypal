@@ -1,6 +1,6 @@
 "use client";
 
-import { verifySession, logOut } from "@/app/api/auth/route";
+import { verifySession, logOut } from "@/app/api/auth/authFunctions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"
 

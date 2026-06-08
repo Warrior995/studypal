@@ -13,7 +13,7 @@ export default function Home() {
     (async () => { 
       const session = await verifySession();
       if (session){
-        router.push("/dashboard");
+        router.push("/topics");
       }
     })();
   },[])
@@ -39,7 +39,7 @@ export default function Home() {
     const response = await login(user, password);
 
     if (response.status === "Success"){
-      router.push("/dashboard");
+      router.push("/topics");
     } else {
       setLoginError(response.reason ? response.reason : "Failed to login, try again later");
     }

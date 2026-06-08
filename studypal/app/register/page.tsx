@@ -13,7 +13,7 @@ export default function Home() {
     (async () => { 
       const session = await verifySession();
       if (session){
-        router.push("/dashboard");
+        router.push("/topics");
       }
     })();
   },[])
@@ -52,7 +52,7 @@ export default function Home() {
     const response = await register(user, password);
 
     if (response.status === "Success"){
-      router.push("/dashboard");
+      router.push("/topics");
     } else {
       setRegisterError(response.reason ? response.reason : "Failed to register user, try again later");
     }
