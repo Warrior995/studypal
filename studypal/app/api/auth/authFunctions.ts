@@ -131,25 +131,18 @@ export async function verifySession(){
 
     const token = cookieStore.get("token")?.value;
 
-    if (!token){
-        return false;
-    }
+    if (token){
 
-    try {
         const payload = jwt.verify(token, process.env.JWT_SECRET!);
-        const session = payload as Session | { id?: number; userid?: number; username?: string };
-        const userId = session.userid;
 
-        if (!userId || !session.username) {
-            return false;
-        }
+        const session = payload as Session;
 
         return {
-            id: userId,
+            id: session.userid,
             username: session.username
         };
-    } catch (error) {
-        return false;
     }
+
+    return false
 
 }

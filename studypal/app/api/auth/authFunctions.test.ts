@@ -133,7 +133,7 @@ describe("auth route", () => {
 	describe("verifySession", () => {
 		test("returns session object when token exists and is valid", async () => {
 			cookieStore.get.mockReturnValue({ value: "tkn" });
-			(jwt.verify as jest.Mock).mockReturnValue({ id: 9, username: "sam" });
+			(jwt.verify as jest.Mock).mockReturnValue({ userid: 9, username: "sam" });
 
 			const res = await verifySession();
 
