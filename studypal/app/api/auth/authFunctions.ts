@@ -131,18 +131,25 @@ export async function verifySession(){
 
     const token = cookieStore.get("token")?.value;
 
-    if (token){
-
-        const payload = jwt.verify(token, process.env.JWT_SECRET!);
-
-        const session = payload as Session;
-
-        return {
-            id: session.userid,
-            username: session.username
-        };
+    if (!token){
+        return false;
     }
 
-    return false
+    try {
+        const payload = jwt.verify(token, process.env.JWT_SECRET!);
+        const session = payload as Session | { id?: number; userid?: number; username?: string };
+        const userId = session.userid;
+
+        if (!userId || !session.username) {
+            return false;
+        }
+
+        return {
+            id: userId,
+            username: session.username
+        };
+    } catch (error) {
+        return false;
+    }
 
 }
