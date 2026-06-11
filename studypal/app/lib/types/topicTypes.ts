@@ -1,5 +1,3 @@
-import { type } from "node:os";
-
 export type Topic = {
     id: number;
     user_id: number;

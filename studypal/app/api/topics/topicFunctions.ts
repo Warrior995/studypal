@@ -61,3 +61,32 @@ export async function createTopic(title: string, description: string){
         data: data as Topic
     }
 }
+
+export async function getTopicById(id: number){
+    const session = await verifySession();
+    if (!session){
+        return {
+            status: "Failed",
+            reason: "Unauthorized"
+        }
+    }
+
+    const {data, error} = await supabase
+        .from("topic")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", session.id)
+        .single();
+
+    if (error){
+        return {
+            status: "Failed",
+            reason: "Failed to fetch topic, try again later"
+        }
+    }
+
+    return {
+        status: "Success",
+        data: data as Topic
+    }
+}

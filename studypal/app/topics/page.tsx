@@ -5,6 +5,7 @@ import { getTopics } from "@/app/api/topics/topicFunctions";
 import { Topic } from "@/app/lib/types/topicTypes";
 import  NewTopicModal  from "@/app/components/topics/newTopic";
 import { useRouter } from "next/navigation";
+import { verifySession } from "../api/auth/authFunctions";
 
 export default function Topics(){
 
@@ -15,6 +16,15 @@ export default function Topics(){
     const [modalOpen, setModalOpen] = useState(false);
 
     const router = useRouter();
+
+    useEffect(() => {
+        (async () => {
+            const session = await verifySession();
+            if (!session){
+                router.push("/login");
+            }
+        })();
+    },[])
 
     useEffect(() => {
         (async () => {

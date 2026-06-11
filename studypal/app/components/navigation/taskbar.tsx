@@ -3,6 +3,7 @@
 import { verifySession, logOut } from "@/app/api/auth/authFunctions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"
+import { Dice1 } from "lucide-react";
 
 export default function TaskBar(){
 
@@ -32,20 +33,46 @@ export default function TaskBar(){
     }
 
     return (
-        <div className="bg-red-600 p-3 h-[13vh] flex items-center gap-3 sticky top-0">
-            <img  className="w-15 rounded-xl" src="/StudyPal Logo.png" alt="StudyPal"/>
+       <div className="bg-red-600 p-3 h-[13vh] flex items-center gap-3 sticky top-0">
+            <img className="w-15 rounded-xl" src="/StudyPal Logo.png" alt="StudyPal" />
             <div className="w-0.5 bg-white h-full" />
             <h1 className="text-[2rem]">StudyPal</h1>
-            <div className="flex-1"/>
-            {
-                isLoggedIn ? ( <h1 className="pr-4 font-bold underline cursor-pointer" onClick={handleLogOut}>Logout</h1>) : 
-                (
-                    <div className="flex gap-5">
-                        <h1 className="pr-4 font-bold underline cursor-pointer" onClick={() => router.push("/login")}>Login</h1>
-                        <h1 className="pr-4 font-bold underline cursor-pointer" onClick={() => router.push("/register")}>Register</h1>
+
+            {isLoggedIn ? (
+                <>
+                    <div className="flex-1 flex justify-center">
+                        <h1
+                            className="font-bold underline cursor-pointer"
+                            onClick={() => router.push("/topics")}
+                        >
+                            Topics
+                        </h1>
                     </div>
-                )
-            }
+
+                    <h1
+                        className="font-bold underline cursor-pointer"
+                        onClick={handleLogOut}
+                    >
+                        Logout
+                    </h1>
+                </>
+            ) : (
+                <div className="ml-auto flex gap-5">
+                    <h1
+                        className="font-bold underline cursor-pointer"
+                        onClick={() => router.push("/login")}
+                    >
+                        Login
+                    </h1>
+
+                    <h1
+                        className="font-bold underline cursor-pointer"
+                        onClick={() => router.push("/register")}
+                    >
+                        Register
+                    </h1>
+                </div>
+            )}
         </div>
     )
 }
