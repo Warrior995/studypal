@@ -46,7 +46,7 @@ export default function Topics(){
     },[])
 
     return (
-        <div className="flex flex-col gap-5 p-5 bg-white h-screen">
+        <div className="flex flex-col gap-5 p-5">
             <div className="flex items-center gap-5">
                 <h1 className="text-[3rem] font-bold text-black pl-15">Topics</h1>
                 <div className="flex-1"/>

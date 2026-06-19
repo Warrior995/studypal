@@ -3,11 +3,13 @@
 import { verifySession, logOut } from "@/app/api/auth/authFunctions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"
-import { Dice1 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function TaskBar(){
 
     const router = useRouter();
+
+    const pathname = usePathname();
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -18,7 +20,8 @@ export default function TaskBar(){
                 setIsLoggedIn(true);
             }
         })();
-    },[]);
+    },[pathname]);
+    
 
     async function handleLogOut(){
         const logOutAttempt = await logOut();
@@ -34,9 +37,11 @@ export default function TaskBar(){
 
     return (
        <div className="bg-red-600 p-3 h-[13vh] flex items-center gap-3 sticky top-0">
-            <img className="w-15 rounded-xl" src="/StudyPal Logo.png" alt="StudyPal" />
-            <div className="w-0.5 bg-white h-full" />
-            <h1 className="text-[2rem]">StudyPal</h1>
+            <div className="flex gap-3 items-center h-full hover:cursor-pointer" onClick={() => router.push("/")}>
+                <img className="w-15 rounded-xl" src="/StudyPal Logo.png" alt="StudyPal" />
+                <div className="w-0.5 bg-white h-full" />
+                <h1 className="text-[2rem]">StudyPal</h1>
+            </div>
 
             {isLoggedIn ? (
                 <>

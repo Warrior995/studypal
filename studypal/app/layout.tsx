@@ -30,7 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <TaskBar/>
-        {children}
+        <main className="flex-1 bg-white">{children}</main>
       </body>
     </html>
   );

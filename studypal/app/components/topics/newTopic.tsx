@@ -40,7 +40,6 @@ export default function NewTopicModal({modalOpen, setModalOpen, topics, setTopic
 
     useEffect(() => {
         for (let topic of topics){
-            console.log(topic)
             if (topic.title === title){
                 setMessage("A topic with this title already exists, please choose a different title");
                 return;

@@ -25,8 +25,6 @@ export async function login(user: string, password: string){
             }
         }
 
-        console.log(data);
-
         const loginSuccess = await bcrypt.compare(password, data[0].pwd_hash ? data[0].pwd_hash : "");
 
         if (loginSuccess){
