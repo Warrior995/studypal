@@ -56,6 +56,7 @@ export default function StudyDetail({ id }: { id: number }) {
             <div className="flex items-center gap-5">
                 <h1 className="text-[3rem] font-bold text-black pl-15">{topicInfo?.title}</h1>
                 <div className="flex-1"/>
+                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}`)}> Back to Topic</button>
             </div>
             {(loading) ? (
                 <div>
