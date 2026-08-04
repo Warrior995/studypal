@@ -78,9 +78,9 @@ export default function StudyDetail({ id }: { id: number }) {
                     ) : null
                     }
                     <div className="flex justify-between mt-5">
-                        <button onClick={() => setCardIndex(prev => Math.max(prev - 1, 0))} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === 0}>Previous</button>
+                        <button onClick={() => {setCardIndex(prev => Math.max(prev - 1, 0)); setFlipCard(false)}} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === 0}>Previous</button>
                         <span className="text-black">{cardIndex + 1} / {cards.length}</span>
-                        <button onClick={() => setCardIndex(prev => Math.min(prev + 1, cards.length - 1))} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === cards.length - 1}>Next</button>
+                        <button onClick={() => {setCardIndex(prev => Math.min(prev + 1, cards.length - 1)); setFlipCard(false)}} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === cards.length - 1}>Next</button>
                     </div>
 
                 </div>
