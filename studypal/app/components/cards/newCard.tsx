@@ -9,10 +9,18 @@ export default function NewCardModal({modalOpen, setModalOpen, topicId, cards, s
     const [answer, setAnswer] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (modalOpen){
+            setQuestion("");
+            setAnswer("");
+            setMessage("");
+        }
+    },[modalOpen]);
     
 
     async function handleCreateCard(){
-        if (question === "" || answer === "" || message){
+        if (question === "" || answer === ""){
             if (question === ""){
                 setMessage("Question cannot be empty");
             }

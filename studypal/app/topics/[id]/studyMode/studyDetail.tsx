@@ -52,7 +52,7 @@ export default function StudyDetail({ id }: { id: number }) {
 
 
     return (
-        <div className= "flex flex-col bg-white h-screen gap-5 p-5">
+        <div className= "flex flex-col bg-white min-h-screen gap-5 p-5">
             <div className="flex items-center gap-5">
                 <h1 className="text-[3rem] font-bold text-black pl-15">{topicInfo?.title}</h1>
                 <div className="flex-1"/>
