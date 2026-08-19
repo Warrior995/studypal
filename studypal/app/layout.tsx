@@ -28,9 +28,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white">
-        <TaskBar/>
-        <main className="flex-1">{children}</main>
+      <body className="bg-white text-black">
+        <main className="flex-1 min-h-screen flex flex-col bg-white">
+          <TaskBar />
+          <div className="min-h-full flex flex-col bg-white">
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );

@@ -37,6 +37,45 @@ export async function createCard(topicId: number, question: string, answer: stri
     };
 }
 
+export async function createCardsMassive(topicId: number, document: string){
+    const session = await verifySession();
+    if (!session) {
+        return {
+            status: "Failed",
+            reason: "Unauthorized",
+            data: null
+        };
+    }
+
+    const lines = document.split("\n");
+    const cardsToInsert = lines.map(line => {
+        const [question, answer] = line.split("-");
+        return {
+            topic_id: topicId,
+            question: question.trim(),
+            answer: answer.trim()
+        };
+    });
+
+    const { data, error } = await supabase
+        .from("cards")
+        .insert(cardsToInsert)
+        .select("*");
+
+    if (error) {
+        return {
+            status: "Failed",
+            reason: error.message,
+            data: null
+        };
+    }
+
+    return {
+        status: "Success",
+        data: data
+    };
+}
+
 export async function getCardsByTopic(topicId: number){
     const session = await verifySession();
     if (!session) {
