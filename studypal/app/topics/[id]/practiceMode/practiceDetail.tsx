@@ -9,13 +9,15 @@ import { verifySession } from "@/app/api/auth/authFunctions";
 import { useRouter } from "next/navigation";
 import { shuffle } from "@/app/lib/functions/generalFunctions";
 
-export default function StudyDetail({ id }: { id: number }) {
+export default function PracticeDetailail({ id }: { id: number }) {
 
+    const [cardPool, setCardPool] = useState<Card[]>([]);
     const [cards, setCards] = useState<Card[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [topicInfo, setTopicInfo] = useState<Topic | null>(null);
     const [flipCard, setFlipCard] = useState<boolean>(false);
     const [cardIndex, setCardIndex] = useState<number>(0);
+    const [failedCards, setFailedCards] = useState<Card[]>([]);
 
     const router = useRouter();
 
@@ -40,7 +42,9 @@ export default function StudyDetail({ id }: { id: number }) {
             const getCards = await getCardsByTopic(id);
             if (getCards.status === "Success"){
                 const cardsData = getCards.data as Card[];
+                setCardPool(cardsData);
                 setCards(shuffle(cardsData));
+                
                 setLoading(false);
                 if (cardsData.length === 0){
                     setLoading(false);
@@ -53,6 +57,30 @@ export default function StudyDetail({ id }: { id: number }) {
             }
         })();
     },[id]);
+
+    function handleCardResult(isCorrect: boolean) {
+        if (!isCorrect) {
+            setFailedCards(prev => [...prev, cards[cardIndex]]);
+        }
+        
+        setCardIndex(prev => Math.min(prev + 1, cards.length)); 
+        setFlipCard(false);
+    }
+
+    function handleReset(){
+        if (failedCards.length > 0){
+            setCards(shuffle(failedCards));
+            setCardIndex(0);
+            setFailedCards([]);
+            setFlipCard(false);
+        }
+        else {
+            setCards(shuffle(cardPool));
+            setCardIndex(0);
+            setFailedCards([]);
+            setFlipCard(false);
+        }
+    }
 
 
     return (
@@ -81,11 +109,25 @@ export default function StudyDetail({ id }: { id: number }) {
                         ) : null
                     ) : null
                     }
+                    {((cards.length === cardIndex)) ? (
+                        <div className="flex flex-col items-center justify-center h-full">
+                            <h2 className="text-2xl font-bold mb-4 color-black text-black">You have completed the topic!</h2>
+                            <h2 className="text-2xl font-bold mb-4 color-black text-black">{(failedCards.length > 0) ? `You got ${failedCards.length} cards wrong, do you want to retry them?` : 'All cards answered correctly!, do you want to start again?'}</h2>
+                            <div className="flex gap-5">
+                                <button onClick={handleReset} className="bg-blue-500 text-white px-4 py-2 rounded">{failedCards.length > 0 ? 'Retry Failed Cards' : 'Start Again'}</button>
+                            </div>
+                        </div>
+                    ) : (
                     <div className="flex justify-between mt-5">
-                        <button onClick={() => {setCardIndex(prev => Math.max(prev - 1, 0)); setFlipCard(false)}} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === 0}>Previous</button>
+                        <span/>
+                        <button onClick={handleCardResult.bind(null, false)} className="bg-red-600 text-white px-9 py-4 rounded disabled:bg-gray-400 text-[1.4rem]">Incorrect</button>
                         <span className="text-black">{cardIndex + 1} / {cards.length}</span>
-                        <button onClick={() => {setCardIndex(prev => Math.min(prev + 1, cards.length - 1)); setFlipCard(false)}} className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400" disabled={cardIndex === cards.length - 1}>Next</button>
+                        <button onClick={handleCardResult.bind(null, true)} className="bg-green-500 text-white px-9 py-4 rounded disabled:bg-gray-400 text-[1.4rem]">Correct</button>
+                        <span/>
                     </div>
+
+                    )
+                    }
 
                 </div>
             )

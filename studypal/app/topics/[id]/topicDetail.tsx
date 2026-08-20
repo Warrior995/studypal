@@ -65,6 +65,7 @@ export default function TopicDetail({ id }: { id: number }) {
                 <h1 className="text-[3rem] font-bold text-black pl-15">{topicInfo?.title}</h1>
                 <div className="flex-1"/>
                 <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/studyMode`)}> Lets study</button>
+                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/practiceMode`)}> Lets practice</button>
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => setModalOpen(true)}> + Create Card</button>
             </div>
             {(loading) ? (
