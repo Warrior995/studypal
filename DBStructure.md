@@ -16,3 +16,6 @@ The current Database Model Is as Follows
     - topic_id number foreign key not null
     - question string not null
     - answer string not null
+
+-- Functions
+    - delete_topic(p_topic_id, p_user_id) function (deletes the topic and all of its children)

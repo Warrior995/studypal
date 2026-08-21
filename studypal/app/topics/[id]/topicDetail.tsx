@@ -1,11 +1,12 @@
 "use client"
 
-import { createCard, getCardsByTopic } from "@/app/api/cards/cardFunctions";
+import { getCardsByTopic } from "@/app/api/cards/cardFunctions";
 import { getTopicById } from "@/app/api/topics/topicFunctions";
 import type { Card } from "@/app/lib/types/cardTypes";
 import type { Topic } from "@/app/lib/types/topicTypes";
 import { useState, useEffect } from "react";
 import NewCardModal from "@/app/components/cards/newCard";
+import DeleteTopicModal from "@/app/components/topics/deleteTopic";
 import { verifySession } from "@/app/api/auth/authFunctions";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +16,8 @@ export default function TopicDetail({ id }: { id: number }) {
     const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [topicInfo, setTopicInfo] = useState<Topic | null>(null);
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [createCardModalOpen, setCreateCardModalOpen] = useState<boolean>(false);
+    const [deleteTopicModalOpen, setDeleteTopicModalOpen] = useState<boolean>(false);
 
     const router = useRouter();
 
@@ -66,7 +68,7 @@ export default function TopicDetail({ id }: { id: number }) {
                 <div className="flex-1"/>
                 <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/studyMode`)}> Lets study</button>
                 <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/practiceMode`)}> Lets practice</button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => setModalOpen(true)}> + Create Card</button>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => setCreateCardModalOpen(true)}> + Create Card</button>
             </div>
             {(loading) ? (
                 <div>
@@ -106,10 +108,15 @@ export default function TopicDetail({ id }: { id: number }) {
                                 </tbody>
                             )}
                     </table>
+                    <div className="flex gap-5 mt-5">
+                            <button className="ml-auto bg-red-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer w-[10rem]" onClick={() => {setDeleteTopicModalOpen(true)}}> Delete Topic</button>
+                    </div>
                 </div>
             )
             }
-            <NewCardModal modalOpen={modalOpen} setModalOpen={setModalOpen} topicId={id} cards={cards} setCards={setCards}/>
+            <NewCardModal modalOpen={createCardModalOpen} setModalOpen={setCreateCardModalOpen} topicId={id} cards={cards} setCards={setCards}/>
+            <DeleteTopicModal modalOpen={deleteTopicModalOpen} setModalOpen={setDeleteTopicModalOpen} topic={topicInfo}/>
+
         </div>
     )
 }

@@ -16,7 +16,8 @@ export async function getTopics(){
     const {data, error} = await supabase
         .from("topic")
         .select("*")
-        .eq("user_id", session.id);
+        .eq("user_id", session.id)
+        .order("id", { ascending: true });
 
     if (error){
         return {
@@ -88,5 +89,66 @@ export async function getTopicById(id: number){
     return {
         status: "Success",
         data: data as Topic
+    }
+}
+
+export async function editTopic(id: number, title: string, description: string){
+    const session = await verifySession();
+    if (!session){
+        return {
+            status: "Failed",
+            reason: "Unauthorized"
+        }
+    }
+
+    
+    const {data, error} = await supabase
+        .from("topic")
+        .update({
+            title,
+            description
+        })
+        .eq("id", id)
+        .eq("user_id", session.id)
+        .select("*")
+        .single();
+
+    if (error){
+        return {
+            status: "Failed",
+            reason: "Failed to edit topic, try again later"
+        }
+    }
+
+    return {
+        status: "Success",
+        data: data as Topic
+    }
+}
+
+export async function deleteTopic(id: number){
+    const session = await verifySession();
+    if (!session){
+        return {
+            status: "Failed",
+            reason: "Unauthorized"
+        }
+    }
+
+    const {error} = await supabase.rpc("delete_topic", {
+        p_topic_id: id,
+        p_user_id: session.id,
+    });
+
+    console.log("deleteTopic error:", error);
+
+    if (error){
+        return {
+            status: "Failed",
+            reason: "Failed to delete topic, try again later"
+        }
+    }
+    return {
+        status: "Success"
     }
 }
