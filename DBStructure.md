@@ -10,6 +10,7 @@ The current Database Model Is as Follows
     - user_id number foreign key not null
     - title string not null
     - description string
+    - unit_id number foreign key
 
 -Table cards
     - id number primary key

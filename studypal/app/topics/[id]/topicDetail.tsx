@@ -64,11 +64,11 @@ export default function TopicDetail({ id }: { id: number }) {
     return (
         <div className= "flex flex-col bg-white min-h-screen gap-5 p-5">
             <div className="flex items-center gap-5">
-                <h1 className="text-[3rem] font-bold text-black pl-15">{topicInfo?.title}</h1>
+                <h1 className="text-[2rem] font-bold text-black pl-15">{topicInfo?.title}</h1>
                 <div className="flex-1"/>
-                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/studyMode`)}> Lets study</button>
-                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => router.push(`/topics/${id}/practiceMode`)}> Lets practice</button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-6 cursor-pointer" onClick={() => setCreateCardModalOpen(true)}> + Create Card</button>
+                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-3 cursor-pointer min-w-[9rem]" onClick={() => router.push(`/topics/${id}/studyMode`)}> Lets study</button>
+                <button className="bg-gray-600 text-white px-4 py-2 rounded-lg mr-3 cursor-pointer min-w-[9rem]" onClick={() => router.push(`/topics/${id}/practiceMode`)}> Lets practice</button>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-3 cursor-pointer min-w-[9rem]" onClick={() => setCreateCardModalOpen(true)}> + Create Card</button>
             </div>
             {(loading) ? (
                 <div>

@@ -40,22 +40,31 @@ export default function TaskBar(){
             <div className="flex gap-3 items-center h-full hover:cursor-pointer" onClick={() => router.push("/")}>
                 <img className="w-15 rounded-xl" src="/StudyPal Logo.png" alt="StudyPal" />
                 <div className="w-0.5 bg-white h-full" />
-                <h1 className="text-[2rem]">StudyPal</h1>
+                <h1 className="text-[2rem] text-white">StudyPal</h1>
             </div>
 
             {isLoggedIn ? (
                 <>
                     <div className="flex-1 flex justify-center">
+                        <span className="mx-auto"/>
                         <h1
-                            className="font-bold underline cursor-pointer"
+                            className="font-bold underline cursor-pointer text-white"
+                            onClick={() => router.push("/units")}
+                        >
+                            Units
+                        </h1>
+                        <span className="mx-auto"/>
+                        <h1
+                            className="font-bold underline cursor-pointer text-white"
                             onClick={() => router.push("/topics")}
                         >
                             Topics
                         </h1>
+                        <span className="mx-auto"/>
                     </div>
-
+                    <span className="mx-auto"/>
                     <h1
-                        className="font-bold underline cursor-pointer"
+                        className="font-bold underline cursor-pointer text-white mr-[2rem]"
                         onClick={handleLogOut}
                     >
                         Logout

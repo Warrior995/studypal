@@ -102,3 +102,37 @@ export async function getCardsByTopic(topicId: number){
         data: data
     };
 }
+
+export async function getCardsByUnit(unitId: number){
+    const session = await verifySession();
+    if (!session) {
+        return {
+            status: "Failed",
+            reason: "Unauthorized"
+        };
+    }
+
+    const { data, error } = await supabase
+        .from("cards")
+        .select(`
+            *,
+            topic!inner (
+                unit_id
+            )
+        `)
+        .eq("topic.unit_id", unitId);
+
+    console.log(data)
+
+    if (error) {
+        return {
+            status: "Failed",
+            reason: "Error fetching cards: " + error.message
+        };
+    }
+
+    return {
+        status: "Success",
+        data: data
+    };
+}

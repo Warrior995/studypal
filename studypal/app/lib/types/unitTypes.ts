@@ -1,7 +1,6 @@
-export type Topic = {
+export type Unit = {
     id: number;
     user_id: number;
-    title: string;
+    name: string;
     description: string | null;
-    unit_id: number | null;
 }

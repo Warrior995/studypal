@@ -3,7 +3,7 @@ import type { Topic } from "@/app/lib/types/topicTypes";
 import { createTopic } from "@/app/api/topics/topicFunctions";
 
 
-export default function NewTopicModal({modalOpen, setModalOpen, topics, setTopics}: {modalOpen: boolean, setModalOpen: (open: boolean) => void, topics: Topic[], setTopics: (topics: Topic[]) => void}){
+export default function NewTopicModal({modalOpen, setModalOpen, topics, setTopics, unitId}: {modalOpen: boolean, setModalOpen: (open: boolean) => void, topics: Topic[], setTopics: (topics: Topic[]) => void, unitId?: number | null}){
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -20,7 +20,7 @@ export default function NewTopicModal({modalOpen, setModalOpen, topics, setTopic
         }
 
         setLoading(true);
-        const response = await createTopic(title, description);
+        const response = await createTopic(title, description, unitId);
         setLoading(false);
         if (response.status === "Success"){
             setMessage("");
