@@ -5,13 +5,7 @@ import { verifySession } from "@/app/api/auth/authFunctions";
 import { Topic } from "@/app/lib/types/topicTypes";
 
 export async function createTopic(title: string, description: string, unit_id?: number | null){
-    console.log(unit_id);
-    if (!unit_id){
-        return {
-            status: "Failed",
-            reason: "Unauthorized"
-        }
-    }
+    
 
     const session = await verifySession();
     if (!session){
